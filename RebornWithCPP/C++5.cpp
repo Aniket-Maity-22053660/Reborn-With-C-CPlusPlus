@@ -45,6 +45,8 @@ public:
     box1 = new Box();
   }
   void getInfo();
+  Box* getBoxRef();
+  Car* getCarRef();
   
 };
 
@@ -52,9 +54,19 @@ void Main::getInfo(){
   box1->getName();
   printName(car1);
 }
+
+Box* Main::getBoxRef(){
+  return box1;
+}
+
+Car* Main::getCarRef(){
+  return car1;
+}
+
 int main(){
 
   Main main;
   main.getInfo();
+  main.getBoxRef()->getName();
   return 0;
 }
