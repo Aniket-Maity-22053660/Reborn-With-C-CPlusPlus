@@ -1,0 +1,28 @@
+#include<stdio.h>
+#include<string.h>
+
+int main(){
+  FILE* file;
+
+  file = fopen("hello16.c", "w");
+  if(file != NULL){
+    goto START;
+  }else{
+    printf("Unable to open the file!\n");
+  }
+
+ START:
+  printf("File was opened successfully!\n");
+  const char* const str = "Aniket Maity was a KING!\n";
+  //str = "King Star Khan\n";
+  for(int i = 0 ; i < strlen(str) ; i++){
+    fputc(str[i], file);
+  }
+  printf("Closing the file....\n");
+    if(!fclose(file)){
+      printf("File was closed successfully!\n");
+    }else{
+      printf("Unable to close the file!\n");
+    }
+  return 0;
+}

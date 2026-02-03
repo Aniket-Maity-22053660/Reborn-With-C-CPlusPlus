@@ -1,0 +1,14 @@
+#include<stdio.h>
+
+struct Student{
+  char name[20];
+  int age;
+} st1, st2;
+
+int main(){
+  printf("Enter the name of the student:");
+  scanf("%s", st1.name);
+  printf("Enter student's age: ");
+  scanf("%d", &st1.age);
+  return 0;
+}

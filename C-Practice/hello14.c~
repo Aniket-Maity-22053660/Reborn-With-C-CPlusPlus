@@ -1,0 +1,17 @@
+#include<stdio.h>
+
+void swapNames(char* name1, char* name2){
+  char* name3 = name1;
+  name1 = name2;
+  name2 = name3;
+}
+int main(){
+
+  char* name1 = "Aniket";
+  char* name2 = "King Star";
+  printf("Before swapping:-\nname1: %s name2: %s\n", name1, name2);
+  swaoNames(name1, name2);
+  printf("After swapping:-\nname1: %s name2: %s\n", name1, name2);
+  
+  return 0;
+}

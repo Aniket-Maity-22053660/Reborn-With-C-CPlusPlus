@@ -1,0 +1,31 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int main(){
+  //static int* arr[10];
+  printf("%p\n", malloc(sizeof(int)));
+  void* arr[3];
+  int a = 3660;
+  float b = 3.14;
+  char* str = "Aniket Maity";
+
+  arr[0] = &a;
+  arr[1] = &b;
+  arr[2] = str;
+
+  printf("arr[%d]: %p\n", (0), arr[0]);
+  printf("arr[%d]: %p\n", (1), arr[1]);
+  printf("arr[%d]: %p\n", (2), arr[2]);
+
+  printf("*arr[%d]: %d\n", 0, *(int*)arr[0]);
+  printf("*arr[%d]: %0.2f\n", 1 ,*(float*)arr[1]);
+  printf("*arr[%d]: %s\n", 2, (char*)arr[2]);
+
+  const int num = 100;
+  printf("num = %d\n", num);
+  //num  = 90;
+  int* const ptr = &num;
+  *ptr = 90;
+  printf("num after change = %d\n", num);
+  //return 0;
+}

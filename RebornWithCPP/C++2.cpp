@@ -1,0 +1,30 @@
+#include<iostream>
+#include<memory>
+
+using namespace std;
+
+int main(){
+  auto_ptr<int> ptr1(new int(10));
+  cout<<"ptr1 -auto_ptr: "<<*ptr1<<endl;
+  auto_ptr<int> ptr2 = ptr1;
+  cout<<"ptr2 -auto_ptr: "<<*ptr2<<endl;
+  //
+  //cout<<"ptr1 again: "<<*ptr1<<endl;
+  unique_ptr<int> ptr3 = make_unique<int>(80);
+  cout<<"ptr3 -unique_ptr: "<<*ptr3<<endl;
+  unique_ptr<int> ptr4 = move(ptr3);
+  cout<<"ptr4 -unque_ptr: "<<*ptr4<<endl;
+  //cout<<"ptr3 again: "<<*ptr3<<endl;
+  shared_ptr<int> ptr5 = make_shared<int>(70);
+  cout<<"ptr5 -shared_ptr: "<<*ptr5<<endl;
+  cout<<"shared_count(): "<<ptr5.use_count()<<endl;
+  shared_ptr<int> ptr6 = ptr5;
+  cout<<"ptr6 = ptr5 : "<<*ptr6<<endl;
+  cout<<"shared_count: "<<ptr5.use_count()<<endl;
+  shared_ptr<int> ptr8 = move(ptr3);
+  weak_ptr<int> ptr7 = ptr8;
+  if(auto lock = ptr7.lock()){
+    cout<<"weak_ptr: "<<*lock<<endl;
+  }
+  return 0;
+}

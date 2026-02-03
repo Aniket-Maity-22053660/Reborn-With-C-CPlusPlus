@@ -1,0 +1,75 @@
+#include<iostream>
+#include<memory>
+#include<cstring>
+
+using  namespace std;
+
+class Car{
+  char name[20];
+public:
+  friend void printName(Car*);
+  void setName(char* name);
+
+};
+
+void Car::setName(char *name){
+  strcpy(this->name, name);
+}
+
+void printName(Car* car){
+  cout<<"Name of the car: "<<car->name<<endl;
+}
+
+int main(){
+  //Car* myCar = new Car();
+  unique_ptr<Car> myCar = make_unique<Car>();
+  unique_ptr<int []> arr = make_unique<int []>(5);
+  
+  char name[20];
+  cout<<"Enter the name of your car: ";
+  gets(name);
+  myCar->setName(name);
+  printName(myCar.get());
+  for(int i = 0 ; i < 5 ; i++){
+    cout<<arr[i]<<" ";
+  cout<<"Name of the car: "<<car->name<<endl;
+ 21 }
+ 22
+ 23 int main(){
+ 24   //Car* myCar = new Car();
+ 25   unique_ptr<Car> myCar = make_unique<Car>();
+ 26   unique_ptr<int []> arr = make_unique<int []>(5);
+ 27
+ 28   char name[20];
+ 29   cout<<"Enter the name of your car: ";
+ 30   gets(name);
+ 31   myCar->setName(name);
+ 32   printName(myCar);
+ 33   for(int i = 0 ; i < 5 ; i++){
+ 34     cout<<*(arr + i)<<" ";
+ 35   }
+ 36   putchar('\n');
+ 37   return 0;
+ 38 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+  putchar('\n');
+  return 0;
+}

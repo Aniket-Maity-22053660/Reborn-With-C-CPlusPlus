@@ -1,0 +1,73 @@
+#include<iostream>
+
+using namespace std;
+
+class Box{
+public:
+  static int objectCount;
+  static int getObjectCount();
+  
+  double length;
+  double breadth;
+  double height;
+
+  Box(){
+    objectCount++;
+  }
+
+  double getVolume();
+  void setLength(double);
+  void setBreadth(double);
+  void setHeight(double);
+};
+
+int Box::objectCount = 0;
+int Box::getObjectCount(){
+  return objectCount;
+}
+
+double Box::getVolume(){
+  return length * breadth * height;
+}
+
+void Box::setLength(double len){
+  length = len;
+}
+
+void Box::setBreadth(double bre){
+  breadth = bre;
+}
+
+void Box::setHeight(double hei){
+  height = hei;
+}
+
+int main(){
+  cout<<"Object count: "<<Box::getObjectCount()<<endl;
+  Box box1;
+  cout<<"Object count: "<<Box::getObjectCount()<<endl;
+  Box box2;
+  cout<<"Object count: "<<Box::getObjectCount()<<endl;
+  double volume;
+
+  box1.length = 6.00;
+  box1.breadth = 7.00;
+  box1.height = 5.00;
+
+  box2.length = 12.00;
+  box2.breadth = 13.00;
+  box2.height = 10.00;
+ 
+  //volume = box1.length * box1.breadth * box1.height;
+  volume = box1.getVolume();
+  cout<<"Volume of box1: "<<volume<<endl;
+
+  //volume = box2.length * box2.breadth * box2.height;
+  volume = box2.getVolume();
+  cout<<"Volume of box2: "<<volume<<endl;
+  int n;
+  cout<<"Enter the value of n: ";
+  cin>>n;
+  int arr[n];
+  return 0;
+}
