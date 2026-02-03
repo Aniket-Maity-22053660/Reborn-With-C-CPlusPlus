@@ -36,7 +36,7 @@ void printName(Box box){
   cout<<"Name of the box: "<<box.name<<endl;
 }
 
-class Main: private Box, private Car{
+class Main: virtual private Box, private Car{
 public:
   Box* box1;
   Car* car1;

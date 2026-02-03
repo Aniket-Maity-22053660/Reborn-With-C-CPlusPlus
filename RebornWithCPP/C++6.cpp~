@@ -1,0 +1,47 @@
+#include<iostream>
+#include<memory>
+
+using namespace std;
+
+class Base{
+public:
+  Base(){
+    cout<<"Inside the Base class!"<<endl;
+  }
+  void func();
+};
+
+void Base::func(){
+  cout<<"Calling Base class function!"<<endl;
+}
+
+class Derived1: public Base{
+public:
+  Derived1(){
+    cout<<"Inside the Derived1 class!"<<endl;
+  }
+};
+
+class Derived2: public Base{
+public:
+  Derived2(){
+    cout<<"Inside the Derived2 class!"<<endl;
+  }
+};
+
+class Main: virtual public Derived1, virtual public Derived2{
+public: 
+  Main(){
+    cout<<"Inside the Main class!"<<endl;
+  }
+};
+
+  int main(){
+    unique_ptr<Main> obj = make_unique<Main>();
+    obj->func();
+    putchar('\n');
+    return 0;
+  }
+
+
+
