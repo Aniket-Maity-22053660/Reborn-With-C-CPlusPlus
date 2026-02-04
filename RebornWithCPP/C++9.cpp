@@ -1,6 +1,8 @@
 #include<iostream>
 #include<array>
 #include<deque>
+#include<list>
+#include<map>
 
 using namespace std;
 
@@ -89,14 +91,31 @@ int main(){
   cout<<"dq size: "<<mySpace1::dq.size()<<endl;  
 
   int size = mySpace1::dq.size();
-  for(int i = 0 ; !mySpace1::dq.empty() ; i++){
+  /*for(int i = 0 ; !mySpace1::dq.empty() ; i++){
     mySpace1::dq.pop_front();
-  }
+    }*/
   cout<<"dq size: "<<mySpace1::dq.size()<<endl;  
   
   for(int i = 0 ; i < mySpace1::dq.size() ; i++){
     cout<<mySpace1::dq.at(i)<<" ";
   }
   putchar('\n');
+  cout<<"List elements: ";
+  list<int> li(mySpace1::dq.begin(), mySpace1::dq.end());
+  for(int num: li){
+    cout<<num<<" ";
+  }
+  li.push_back(500);
+  cout<<"\nList back: "<<li.back()<<endl;
+  putchar('\n');
+  map<string, int> mp = {{"King", 1}, {"Star", 2}, {"Khan", 3}};
+  map<string, int>::iterator it2 = mp.begin();
+  mp.insert({"King Star Khan", 99});
+  while(it2 != mp.end()){
+    cout<<it2->first<<"->"<<it2->second<<endl;
+    it2++;
+  }
+  putchar('\n');
+  cout<<"Total number of elements in the map: "<<mp.size()<<endl;
   return 0;
 }
