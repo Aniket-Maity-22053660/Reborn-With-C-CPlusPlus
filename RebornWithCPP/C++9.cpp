@@ -85,8 +85,14 @@ int main(){
   mySpace1::dq.push_back(87);
   mySpace1::dq.push_back(99);
   mySpace1::dq.push_front(999);
-  
 
+  cout<<"dq size: "<<mySpace1::dq.size()<<endl;  
+
+  int size = mySpace1::dq.size();
+  for(int i = 0 ; !mySpace1::dq.empty() ; i++){
+    mySpace1::dq.pop_front();
+  }
+  cout<<"dq size: "<<mySpace1::dq.size()<<endl;  
   
   for(int i = 0 ; i < mySpace1::dq.size() ; i++){
     cout<<mySpace1::dq.at(i)<<" ";
