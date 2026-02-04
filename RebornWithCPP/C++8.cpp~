@@ -1,0 +1,17 @@
+#include<iostream>
+
+using namespace std;
+
+
+
+int main(){
+  char* name = "King Star Khan";
+  auto myName = [&](name) {
+    name = "Aniket Star Khan";
+    cout<<name<<endl;
+  };  
+
+  //myName("Aniket Star");
+  myName(name);
+  return 0;
+}

@@ -1,0 +1,26 @@
+#include<iostream>
+
+using namespace std;
+
+
+int main(){
+  
+   Edit Options Buffers Tools C++ Help
+  1 #include<iostream>
+  2
+  3 using namespace std;
+  4
+  5
+  6 int main(){
+  7   char* name = "King Star Khan";
+  8   auto myName = [=]()=>{
+  9     return cout<<name<<endl;
+ 10   }
+ 11
+ 12   myName(name);
+ 13   return 0;
+ 14 }
+
+  myName();
+  return 0;
+}
