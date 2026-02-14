@@ -1,0 +1,41 @@
+#include<iostream>
+#include<vector>
+#define Max(left, right) (left > right ? left : right)
+
+using namespace std;
+
+int findMax(vector<int> arr, int i, int j){
+  if(i == j){
+    return arr.at(i);
+  }
+
+  int mid = i + (j - i) / 2;
+  int left = findMax(arr, i, mid);
+  int right = findMax(arr, mid + 1 , j);
+
+  return Max(left, right);
+}
+int main(){
+  int n;
+  cout<<"Enter the size of the array: ";
+  cin>>n;
+  vector<int> arr(n);
+  vector<int>::iterator it;
+  int i = 0;
+  for(it = arr.begin() ; it != arr.end() ; it++){
+    cout<<"Enter the "<<i<<"th element: ";
+    cin>>*it;
+    i++;
+  }
+
+  cout<<"Content of the given array: ";
+  for(it = arr.begin() ; it != arr.end() ; it++){
+    cout<<*it<<" ";
+  }
+
+  putchar('\n');
+
+  int max = findMax(arr, 0, n-1);
+  cout<<"Maximum element of this array: "<<max<<endl;
+  return 0;
+}
