@@ -1,0 +1,59 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+void printArray(const vector<int> &vec){
+  cout<<"Contents of the array:- "<<endl;
+  vector<int>::const_iterator itr;
+  for(itr = vec.cbegin() ; itr != vec.cend() ; itr++){
+    cout<<*itr<<" ";
+  }
+  putchar('\n');
+}
+
+void swap(vector<int> &vec, int i,int j){
+  int temp = vec.at(i);
+  vec.at(i) = vec.at(j);
+  vec.at(j) = temp;
+}
+
+int partition(vector<int> &vec, int i, int j){
+  int v = vec.at(i);
+  int k = i;
+  for(int m = k + 1 ; m <= j ; m++){
+    if(vec.at(m) < v){
+      k++;
+      swap(vec, m, k);
+    }
+  }
+  swap(vec, k, v);
+  return k;
+}
+
+void quickSort(vector<int> &arr, int i, int j){
+  if(i < j){
+    int m = partition(arr, i, j);
+    quickSort(arr, i, m-1);
+    quickSort(arr, m+1, j);
+  }
+}
+
+int main(){
+  int num;
+  cout<<"Enter the size of the array: ";
+  cin>>num;
+
+  vector<int> arr(num);
+  cout<<"Enter the elements of the array:- "<<endl;
+
+  for(int i = 0 ; i < num ; i++){
+    cout<<"Enter the element"<<i<<":";
+    cin>>arr.at(i);
+  }
+  printArray(arr);
+  quickSort(arr, 0, num - 1);
+  cout<<"After quick sort:-"<<endl;
+  printArray(arr);
+  return 0;
+}

@@ -35,7 +35,65 @@ vector<int> merge(const vector<int> &vec1, const vector<int> &vec2){
 }
 
 vector<int> mergeSort(const vector<int> &vec, int i, int j){
+#include<iostream>
+#include<vector>
+#define findMin(num1, num2) (num1 > num2 ? num2 : num1)
+#define findMax(num1, num2) (num1 > num2 ? num1 : num2)
 
+using namespace std;
+
+void printArray(vector<int> &vec){
+  cout<<"Contents of the array: ";
+  vector<int>::iterator itr;
+  for(itr = vec.begin() ; itr != vec.end() ; itr++){
+    cout<<*itr<<" ";
+  }
+  putchar('\n');
+}
+
+vector<int> findMinMax(vector<int> arr, int i, int j, vector<int> vec){
+  if(i < j){
+    int mid = i + (j - 1) / 2;
+
+    vector<int> vec1 = findMinMax(arr, i, mid, vec);
+    vector<int> vec2 = findMinMax(arr, mid+1, j, vec);
+
+    int min = findMin(vec1.at(0), vec2.at(1));
+    int max = findMax(vec1.at(1), vec2.at(1));
+
+    vec.at(0) = min;
+    vec.at(1) = max;
+
+    return vec;
+  }
+  return {arr.at(i), arr.at(j)};
+
+}
+int main(){
+
+  int num;
+  cout<<"Enter the size of the array: ";
+  cin>>num;
+
+  vector<int> arr(num, 0);
+  cout<<"Enter the elements: "<<endl;
+
+  for(int i = 0 ; i < num ; i++){
+    cout<<"Enter the element "<<(i)<<": ";
+    cin>>arr.at(i);
+
+  }
+
+  printArray(arr);
+
+  vector<int> vec(2);
+
+  vector<int> ans = findMinMax(arr, 0, num - 1, vec);
+  cout<<"Max element of the array: "<<ans.at(1)<<endl;
+  cout<<"Min element of the array: "<<ans.at(0)<<endl;
+
+  return 0;
+}
   if(i < j){
 
     int mid = i + (j - i) / 2;
