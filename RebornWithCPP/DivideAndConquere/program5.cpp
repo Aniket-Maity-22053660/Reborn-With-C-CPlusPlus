@@ -1,0 +1,59 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+void swap(vector<int> &arr, int i, int j){
+  int temp = arr.at(i);
+  arr.at(i) = arr.at(j);
+  arr.at(j) = temp;
+}
+
+void printArray(const vector<int> &arr){
+  vector<int>::const_iterator itr;
+  for(itr = arr.cbegin() ; itr != arr.cend() ; itr++){
+    cout<<*itr<<" ";
+  }
+  putchar('\n');
+}
+
+void buildMaxHeap(vector<int> &arr, int i){
+
+  int l = 2*i + 1;
+  int r = 2*i + 2;
+  int largest;
+
+  if(l < arr.size() && arr.at(l) > arr.at(i)){
+    largest = l;
+  }else{
+    largest = i;
+  }
+  if(r < arr.size() && arr.at(r) > arr.at(largest)){
+    largest = r;
+  }
+  if(largest != i){
+    swap(arr, largest, i);
+    buildMaxHeap(arr, largest);
+  }
+}
+
+int main(){
+  int num;
+  cout<<"Enter the size of the array: ";
+  cin>>num;
+  cout<<"Enter the contents of the array:- "<<endl;
+  vector<int> arr(num);
+  for(int i = 0 ; i < num ; i++){
+    cout<<"enter the element-"<<i<<":";
+    cin>>arr.at(i);
+  }
+  cout<<"Contents of the array: ";
+  printArray(arr);
+  for(int i = (num / 2) - 1 ; i >= 0 ; i--){
+    buildMaxHeap(arr, i);
+  }
+  cout<<"After constructing the max heap: ";
+  printArray(arr);
+}
+
+
