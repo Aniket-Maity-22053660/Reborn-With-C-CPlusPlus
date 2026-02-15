@@ -17,6 +17,7 @@ void printArray(const vector<int> &arr){
   putchar('\n');
 }
 
+
 void buildMaxHeap(vector<int> &arr, int i){
 
   int l = 2*i + 1;
@@ -37,6 +38,15 @@ void buildMaxHeap(vector<int> &arr, int i){
   }
 }
 
+int extractMaxHeapElement(vector<int> &arr){
+  int max = arr.at(0);
+  int num = arr.back();
+  arr.at(0) = num;
+  arr.pop_back();
+  buildMaxHeap(arr, 0);
+  return max;
+}
+
 int main(){
   int num;
   cout<<"Enter the size of the array: ";
@@ -54,6 +64,10 @@ int main(){
   }
   cout<<"After constructing the max heap: ";
   printArray(arr);
+  cout<<"Max element of the heap: "<<extractMaxHeapElement(arr)<<endl;
+  cout<<"Max Heap after extracting the max element: ";
+  printArray(arr);
+  return 0;
 }
 
 
