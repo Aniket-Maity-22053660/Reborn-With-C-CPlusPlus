@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<climits>
 
 using namespace std;
 
@@ -47,6 +48,28 @@ int extractMaxHeapElement(vector<int> &arr){
   return max;
 }
 
+int findParent(int i){
+  return (i - 1) / 2;
+}
+
+void increaseKey(vector<int> &arr, int back, int key){
+  if(key < arr.at(back)){
+    cout<<"Heap underflow!"<<endl;
+  }
+  int parent = (back - 1) / 2;
+  int i = back;
+  arr.at(back) = key;
+  while(i > 0){
+    if(i > 0 && arr.at(i) > arr.at(findParent(i))){
+      swap(arr, i, findParent(i));
+      i = findParent(i);
+    }
+  }
+}
+void insertKey(vector<int> &arr, int key){
+  arr.push_back(INT_MIN);
+  increaseKey(arr, arr.size() - 1, key);
+}
 int main(){
   int num;
   cout<<"Enter the size of the array: ";
@@ -66,6 +89,12 @@ int main(){
   printArray(arr);
   cout<<"Max element of the heap: "<<extractMaxHeapElement(arr)<<endl;
   cout<<"Max Heap after extracting the max element: ";
+  printArray(arr);
+  int key;
+  cout<<"Enter the key you want to insert: ";
+  cin>>key;
+  insertKey(arr, key);
+  cout<<"After insertion Max Heap: ";
   printArray(arr);
   return 0;
 }
