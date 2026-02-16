@@ -70,6 +70,27 @@ void insertKey(vector<int> &arr, int key){
   arr.push_back(INT_MIN);
   increaseKey(arr, arr.size() - 1, key);
 }
+
+vector<int> heapSort(vector<int> &arr){
+
+  vector<int> sorted(arr.size());
+  int k = arr.size() - 1;
+  for(int i = (arr.size() / 2) - 1 ; i >= 0 ; i--){
+    buildMaxHeap(arr, i);
+  }
+
+  for(int i = arr.size() - 1 ; i >= 0 ; i--){
+    swap(arr, 0, i);
+    sorted.at(k--) = arr.at(i);
+    arr.pop_back();
+
+    for(int j = (arr.size() / 2) - 1 ; j >= 0 ; j--){
+      buildMaxHeap(arr, j);
+    }
+  }
+  return sorted;
+}
+
 int main(){
   int num;
   cout<<"Enter the size of the array: ";
@@ -96,6 +117,19 @@ int main(){
   insertKey(arr, key);
   cout<<"After insertion Max Heap: ";
   printArray(arr);
+  cout<<"Enter the size of the array for performing Heap Sort: ";
+  cin>>num;
+  cout<<"Enter the contents of the array:- "<<endl;
+  vector<int> arr1(num);
+  for(int i = 0 ; i < num ; i++){
+    cout<<"Enter element-"<<i<<": ";
+    cin>>arr1.at(i);
+  }
+  cout<<"Content  of the array before Heap Sort: ";
+  printArray(arr1);
+  arr1 = heapSort(arr1);
+  cout<<"Content  of the array after Heap Sort: ";
+  printArray(arr1);
   return 0;
 }
 
