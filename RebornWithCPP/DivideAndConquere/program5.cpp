@@ -59,13 +59,13 @@ void increaseKey(vector<int> &arr, int back, int key){
   int parent = (back - 1) / 2;
   int i = back;
   arr.at(back) = key;
-  while(i > 0){
-    if(i > 0 && arr.at(i) > arr.at(findParent(i))){
-      swap(arr, i, findParent(i));
-      i = findParent(i);
-    }
+
+  while(i > 0 && arr.at((i / 2) - 1) < key){
+    swap(arr, i, (i / 2) - 1);
+    i = (i / 2) - 1;
   }
 }
+
 void insertKey(vector<int> &arr, int key){
   arr.push_back(INT_MIN);
   increaseKey(arr, arr.size() - 1, key);
@@ -81,7 +81,7 @@ vector<int> heapSort(vector<int> &arr){
 
   for(int i = arr.size() - 1 ; i >= 0 ; i--){
     swap(arr, 0, i);
-    sorted.at(k--) = arr.at(i);
+    sorted.at(k--) = arr.at(arr.size() - 1);
     arr.pop_back();
 
     for(int j = (arr.size() / 2) - 1 ; j >= 0 ; j--){
