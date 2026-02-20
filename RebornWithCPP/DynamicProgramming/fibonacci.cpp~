@@ -1,0 +1,35 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+ 
+int generate_fibonacci(int num, vector<int> &t){
+  if(num == 0 || num == 1){
+    return num;
+  }
+  /* if(t.at(num) != -1){
+    return t.at(num);
+    } */
+  t.at(num) = generate_fibonacci(num - 1, t) + generate_fibonacci(num - 2, t);
+  return t.at(num);
+}
+
+void print_fibonacci(int num, vector<int> &t){
+
+  for(int i = 0 ; i < num ; i++){
+    cout<<generate_fibonacci(i, t)<<" ";
+  }
+  cout<<'\n';
+ 
+}
+
+int main(){
+  int num;
+  cout<<"Enter how many numbers you want to get in the fibonacci sequence: ";
+  cin>>num;
+  vector<int> t(num + 1, -1);
+  cout<<"Fibonacci sequence: ";
+  print_fibonacci(num, t);
+  
+  return 0;
+}
