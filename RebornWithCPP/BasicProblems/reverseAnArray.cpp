@@ -1,0 +1,47 @@
+#include<iostream>
+#include<memory>
+
+using namespace std;
+
+void swap(unique_ptr<int []> &arr, int l, int r){
+  int temp = arr[l];
+  arr[l] = arr[r];
+  arr[r] = temp;
+  
+}
+
+void print_array(unique_ptr<int []> &arr, int n){
+  for(int i = 0 ; i < n ; i++){
+    cout<<arr[i]<<" ";
+  }
+  putchar('\n');
+}
+
+void reverse_array(unique_ptr<int[]> &arr, int l, int r){
+  if(l > r){
+    return ;
+  }
+  swap(arr, l, r);
+  return reverse_array(arr, l + 1, r - 1);
+}
+
+int main(){
+
+  int num;
+  cout<<"Enter how many elements you want to insert: ";
+  cin>>num;
+  unique_ptr<int []> ptr = make_unique<int []>(num);
+
+  cout<<"Enter the elements:-"<<endl;
+  for(int i = 0 ; i < num ; i++){
+    cout<<"Enter element-"<<(i+1)<<": ";
+    cin>>ptr[i];
+  }
+  cout<<"Given array: ";
+  print_array(ptr, num);
+  reverse_array(ptr, 0, num - 1);
+  cout<<"After reversal: ";
+  print_array(ptr, num);
+  
+  return 0;
+}
