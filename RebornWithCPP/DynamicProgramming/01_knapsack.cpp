@@ -4,17 +4,23 @@
 
 using namespace std;
 
-int solve_01_knapsack(vector<int> weight, vector<int> profit, int size, int n){
+int solve_01_knapsack(vector<int> weight, vector<int> profit,vector<vector<int>> &t, int size, int n){
   if(size == 0 ||  n == 0){
     return 0;
   }
 
+  if(t.at(size).at(n - 1) != -1){
+    return t.at(size).at(n - 1);
+  }
+
   if(weight.at(n - 1) <= size){
-    return max(profit.at(n - 1) + solve_01_knapsack(weight, profit, size - weight.at(n - 1), n - 1), solve_01_knapsack(weight, profit, size, n - 1));
+    t.at(size).at(n - 1) = max(profit.at(n - 1) + solve_01_knapsack(weight, profit, t, size - weight.at(n - 1), n - 1), solve_01_knapsack(weight, profit, t, size, n - 1));
   }
   else{
-    return solve_01_knapsack(weight, profit, size, n - 1);
+    t.at(size).at(n - 1) = solve_01_knapsack(weight, profit, t, size, n - 1);
   }
+
+  return t.at(size).at(n - 1);
   
 }
 
@@ -29,7 +35,7 @@ int main(){
 
   vector<int> weight(num);
   vector<int> profit(num);
-
+  vector<vector<int>> t(size + 1, vector<int> (num + 1, -1));
   cout<<"Enter the weights of the element:- "<<endl;
   for(int i = 0 ; i < num ; i++){
     cout<<"Enter the weight of the element - "<<(i+1)<<": ";
@@ -41,7 +47,7 @@ int main(){
     cout<<"Enter the profit of the element - "<<(i+1)<<": ";
     cin>>profit.at(i);
   }
-  int max_profit = solve_01_knapsack(weight, profit, size, weight.size());
+  int max_profit = solve_01_knapsack(weight, profit, t, size, weight.size());
   cout<<"Maximum profit after creating the knapsack: "<<max_profit<<endl;
   return 0;
 }
