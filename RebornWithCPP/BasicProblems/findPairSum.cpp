@@ -1,0 +1,56 @@
+#include<iostream>
+#include<memory>
+#include<algorithm>
+#include<vector>
+
+using namespace std;
+
+vector<vector<int>> findPairSum(unique_ptr<int []> &ptr, int num, int target){
+  vector<vector<int>> res;
+  for(int i = 0 ; i < num ; i++){
+    int rem = target - ptr[i];
+    for(int j = i + 1 ; j < num ; j++){
+      if(ptr[j] == rem){
+	vector<int> temp;
+	temp.push_back(min(rem, ptr[i]));
+	temp.push_back(max(rem, ptr[i]));
+	res.push_back(temp);
+      }
+    }
+  }
+  sort(res.begin(), res.end());
+  return res;
+}
+
+int main(){
+  int num, target;
+  cout<<"Enter how many numbers you want to insert in the array: ";
+  cin>>num;
+  cout<<"In this problem we are required to find the pair sum for a given target sum:- "<<endl;
+  cout<<"Enter the target sum: ";
+  cin>>target;
+  unique_ptr<int []> ptr = make_unique<int []>(num);
+  for(int i = 0 ; i < num ; i++){
+    cout<<"Enter element - "<<(i + 1)<<": ";
+    cin>>ptr[i];
+  }
+  vector<vector<int>> ans = findPairSum(ptr, num, target);
+  if(!ans.empty()){
+  cout<<"Pair sum: ";
+  for(vector<int> vec : ans){
+    vector<int>::iterator itr;
+    cout<<"( ";
+    for(itr = vec.begin() ; itr != vec.end() ; itr++){
+      cout<<*itr;
+      if(next(itr) != vec.end()){
+	cout<<", ";
+      }
+    }
+    cout<<" )";
+  }
+  putchar('\n');
+  }else{
+    cout<<"None of the pair in this array makes a sum "<<target<<"."<<endl;
+  }
+  return 0;
+}
