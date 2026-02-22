@@ -1,0 +1,47 @@
+#include<iostream>
+#include<memory>
+#include<algorithm>
+
+using namespace std;
+
+void binSearch(unique_ptr<int []> &ptr, int i, int j, int key, bool &flag){
+
+  int mid = i + (j - i) / 2;
+  if(j < i){
+    return;
+  }
+  
+  if(ptr[mid] == key){
+    cout<<"Element "<<key<<" was found at index "<<mid<<endl;
+    flag = true;
+    return;
+  }
+  else if(ptr[mid] > key){
+    binSearch(ptr, i, mid - 1, key, flag);
+  }else{
+    binSearch(ptr, mid + 1, j, key, flag);
+  }
+  return;  
+}
+
+int main(){
+  int num;
+  cout<<"Enter the number of elements you want to insert in the array: ";
+  cin>>num;
+  unique_ptr<int []> ptr = make_unique<int []>(num);
+  int key;
+  cout<<"Enter the key element you want to search in the array: ";
+  cin>>key;
+  cout<<"Enter the elements in the array:- "<<endl;
+  for(int i = 0 ; i < num ; i++){
+    cout<<"Enter element - "<<(i + 1)<<": ";
+    cin>>ptr[i];
+  }
+  sort(ptr.get(), ptr.get() + (num));
+  bool flag = false;
+  binSearch(ptr, 0, num - 1, key, flag);
+  if(!flag){
+    cout<<"Element was not found in the array!"<<endl;
+  }
+  return 0;
+}
