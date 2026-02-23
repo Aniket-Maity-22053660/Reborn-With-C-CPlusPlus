@@ -9,19 +9,23 @@ void swap(unique_ptr<int []> &ptr, int i, int j){
   ptr[j] = temp;
 }
 
-void arrange(unique_ptr<int []> &ptr, int i, int num){
+void arrange(unique_ptr<int []> &ptr, int i, int num, bool &flag){
   if(i < num - 1){
     if(ptr[i] > ptr[i + 1]){
+      flag = true;
       swap(ptr, i, i + 1);
     }
-    arrange(ptr, i + 1, num);
+    arrange(ptr, i + 1, num, flag);
   }
 }
 
 void bubbleSort(unique_ptr<int []> &ptr, int num){
   if(num > 1){
-    arrange(ptr, 0, num);
+    bool flag = false;
+    arrange(ptr, 0, num, flag);
+    if(flag){
     bubbleSort(ptr, num - 1);
+    }
   }
 }
 
