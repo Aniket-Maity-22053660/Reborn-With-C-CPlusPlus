@@ -1,0 +1,42 @@
+#include<iostream>
+
+using namespace std;
+
+void findSqrt(int num,int i, int j, int &ans){
+  if(i <= j){
+    int mid = i + (j - i) / 2;
+    if(mid * mid > num){
+      j = mid - 1;
+    }else{
+      ans = mid;
+      i = mid + 1;
+    }
+    findSqrt(num, i, j, ans);
+  }
+}
+
+long double morePrec(int num, int ans, int prec){
+  double fraction = 1.0;
+  long double ans1 = ans;
+  for(int i = 0 ; i < prec ; i++){
+    fraction = fraction / 10;
+    for(long double j = ans1 ; j * j < num ; j = j + fraction){
+      ans1 = j;
+    }
+  }
+  return ans1;
+}
+
+int main(){
+  int num;
+  cout<<"Enter the number: ";
+  cin>>num;
+  int ans = -1;
+  findSqrt(num, 0, num, ans);
+  int prec;
+  cout<<"Enter the number of precision you want to have: ";
+  cin>>prec;
+  long long double ans1 = morePrec(num, ans, prec);
+  cout<<"Square root of "<<num<<" with precision "<<prec<<": "<<ans1<<endl;
+  return 0;
+}
