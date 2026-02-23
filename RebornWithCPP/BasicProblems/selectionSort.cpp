@@ -22,7 +22,9 @@ void selectionSort(unique_ptr<int []> &ptr, int i, int num){
   if(i < num - 1){
     int min = i;
     findMin(ptr, i, min, num);
+    if(min != i){
     swap(ptr, i, min);
+    }
     selectionSort(ptr, i + 1, num);
   }
 }
