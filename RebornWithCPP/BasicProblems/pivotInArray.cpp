@@ -1,0 +1,35 @@
+#include<iostream>
+#include<memory>
+
+using namespace std;
+
+void findPivot(unique_ptr<int []> &ptr, int i, int j, int &ans){
+  if(j <= i){
+    ans = i;
+    return;
+  }
+  int mid = i + (j - i) / 2;
+  if(ptr[mid] > ptr[0]){
+    i = mid + 1;
+  }else{
+    j = mid;
+  }
+  findPivot(ptr, i, j, ans);
+  return;
+}
+
+int main(){
+  int num;
+  cout<<"Enter the total number of elements in the array: ";
+  cin>>num;
+  unique_ptr<int []> ptr = make_unique<int []>(num);
+  cout<<"Enter the elements in the array in sorted and rotated order:-"<<endl;
+  for(int i = 0 ; i < num ; i++){
+    cout<<"Enter element - "<<(i + 1)<<": ";
+    cin>>ptr[i];
+  }
+  int ans = -1;
+  findPivot(ptr, 0, num - 1, ans);
+  cout<<"Pivot element: "<<ptr[ans]<<endl;
+  return 0;
+}
