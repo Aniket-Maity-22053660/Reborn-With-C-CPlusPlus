@@ -1,0 +1,49 @@
+#include<iostream>
+#include<memory>
+
+using namespace std;
+
+void swap(unique_ptr<int []> &ptr, int i, int j){
+  int temp = ptr[i];
+  ptr[i] = ptr[j];
+  ptr[j] = temp;
+}
+
+void moveZerosEnd(unique_ptr<int []> &ptr, int i, int j){
+  if(i < j){
+    if(ptr[i] == 0 && ptr[j] !=0){
+      swap(ptr, i, j);
+      i++;
+      j--;
+    }else if(ptr[j] == 0){
+      j--;
+    }else if(ptr[i] != 0){
+      i++;
+    }
+    moveZerosEnd(ptr, i, j);
+  }
+}
+
+int main(){
+  int num;
+  cout<<"Enter the total number of array elements: ";
+  cin>>num;
+  cout<<"Enter the array elements:-"<<endl;
+  unique_ptr<int []> ptr = make_unique<int []>(num);
+  for(int i = 0 ; i < num ; i++){
+    cout<<"Enter element - "<<(i + 1)<<": ";
+    cin>>ptr[i];
+  }
+  cout<<"Before moving zeros to the end: ";
+  for(int i = 0 ; i < num ; i++){
+    cout<<ptr[i]<<" ";
+  }
+  putchar('\n');
+  moveZerosEnd(ptr, 0, num - 1);
+  cout<<"After moving zeros to the end: ";
+  for(int i = 0 ; i < num ; i++){
+    cout<<ptr[i]<<" ";
+  }
+  putchar('\n');
+  return 0;
+}
