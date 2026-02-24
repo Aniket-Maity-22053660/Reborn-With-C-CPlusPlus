@@ -1,0 +1,116 @@
+#include<iostream>
+#include<memory>
+#include<algorithm>
+
+using namespace std;
+
+void add(unique_ptr<int []> &ptr1, unique_ptr<int []> &ptr2 ,int &num1, int &num2, int &num3, int &carry, unique_ptr<int []> &ans){
+  if(num1 >= 0 && num2 >= 0){
+    int total;
+    if(carry != -1){
+      total = carry + ptr1[num1--] + ptr2[num2--];
+      carry = -1;
+    }else{
+      total = ptr1[num1--] + ptr2[num2--];
+    }
+    if(total <= 9){
+      ans[num3--] = total;
+    }else{
+      int rem = total % 10;
+      int num = total / 10;
+      carry = num;
+      ans[num3--] = rem;
+    }
+    add(ptr1, ptr2, num1, num2, num3, carry, ans);
+  }
+}
+
+void add1(unique_ptr<int []> &ptr1, int num1, int &num3, int &carry, unique_ptr<int []> &ans){
+  if(num1 >= 0){
+    int total;
+    if(carry != -1){
+      total = carry + ptr1[num1];
+      carry = -1;
+    }else{
+      total = ptr1[num1];
+    }
+    if(total > 9){
+      int rem = total % 10;
+      int num = total / 10;
+      carry = num;
+      ans[num3--] = rem;
+    }else{
+      ans[num3--] = total;
+    }
+    add1(ptr1, num1 - 1, num3, carry, ans);
+  }
+}
+
+void add2(unique_ptr<int []> &ptr2, int num2, int &num3, int &carry, unique_ptr<int []> &ans){
+  if(num2 >= 0){
+    int total;
+    if(carry != -1){
+      total = carry + ptr2[num2];
+      carry = -1;
+    }else{
+      total = ptr2[num2];
+    }
+    if(total > 9){
+      int rem = total % 10;
+      int num = total / 10;
+      carry = num;
+      ans[num3--] = rem;
+    }else{
+      ans[num3--] = total;
+    }
+    add2(ptr2, num2 - 1, num3, carry, ans);
+  }
+}
+
+
+void addTwoArray(unique_ptr<int []> &ptr1, unique_ptr<int []> &ptr2, int num1, int num2, unique_ptr<int []> &ans){
+  int carry = -1, num3 = max(num1, num2) + 1;
+  add(ptr1, ptr2, num1, num2, num3, carry, ans);
+  add1(ptr1, num1, num3, carry, ans);
+  add2(ptr2, num2, num3, carry, ans);
+  if(carry !=  -1){
+    ans[num3--] = carry;
+    carry = -1;
+  }
+}
+
+void printArray(unique_ptr<int []> &ptr, int num){
+  for(int i = 0 ; i < num ; i++){
+    cout<<ptr[i]<<" ";
+  }
+  putchar('\n');
+}
+
+int main(){
+  int num1, num2;
+  cout<<"Enter total number of elements for array - 1: ";
+  cin>>num1;
+  cout<<"Enter total number of elements for array - 2: ";
+  cin>>num2;
+  unique_ptr<int []> ptr1 = make_unique<int []>(num1);
+  unique_ptr<int []> ptr2 = make_unique<int []>(num2);
+  cout<<"Enter elements of array - 1:- "<<endl;
+  for(int i = 0 ; i < num1 ; i++){
+    cout<<"Enter element - "<<(i + 1)<<": ";
+    cin>>ptr1[i];
+  }
+  cout<<"Enter elements of array - 2:- "<<endl;
+  for(int i = 0 ; i < num2 ; i++){
+    cout<<"Enter element - "<<(i + 1)<<": ";
+    cin>>ptr2[i];
+  }
+  unique_ptr<int []> ans = make_unique<int []>(max(num1, num2) + 1);
+  cout<<"Content of array - 1: ";
+  printArray(ptr1, num1);
+  cout<<"Content of array - 2: ";
+  printArray(ptr2, num2);
+  addTwoArray(ptr1, ptr2, num1 - 1, num2 - 1, ans);
+  cout<<"After addition: ";
+  printArray(ans, max(num1, num2) + 1);
+  return 0;
+}
