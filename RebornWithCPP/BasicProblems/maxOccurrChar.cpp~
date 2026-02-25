@@ -1,0 +1,84 @@
+#include<iostream>
+#include<memory>
+#include<map>
+#include<vector>
+#include<climits>
+
+using namespace std;
+
+void find(string name, int i, int num, map<char, int> &mp){
+  if(i < num){
+    mp[name[i]]++;
+    find(name, i + 1, num, mp);
+  }
+}
+
+void swap(vector<int> &counts, int i, int j){
+  int temp = counts.at(i);
+  counts.at(i) = counts.at(j);
+  counts.at(j) = temp;
+}
+
+void partition(vector<int> &counts, int i, int j, int &k, int element){
+  if(i <= j){
+    if(counts.at(i) < element){
+      k++;
+      swap(counts, i, k);
+    }
+    partition(counts, i + 1, j, k, element);
+  }
+}
+
+int makePartition(vector<int> &counts, int i, int j){
+  int element = counts.at(i);
+  int k = i;
+  partition(counts, i + 1, j, k, element);
+  swap(counts, i, k);
+  return k;
+}
+
+void quickSort(vector<int> &counts, int i, int j){
+  if(i < j){
+    int partition = makePartition(counts, i, j);
+    quickSort(counts, i, partition - 1);
+    quickSort(counts, partition + 1, j);
+  }
+}
+
+void searchMax(vector<int> &counts, int i, int j, int &max){
+  if(i < j){
+    int mid = i + (j - i) / 2;
+    max = counts[mid + 1];
+    searchMax(counts, i + 1, j, max);
+  }
+}
+
+void findMostOccurr(string name, int i, int num){
+  int count = 0;
+  map<char, int> mp;
+  find(name, i, num, mp);
+  vector<int> counts;
+  map<char, int>::iterator itr;
+  for(itr = mp.begin() ; itr != mp.end() ; itr++){
+    counts.push_back(itr->second);
+  }
+  quickSort(counts, 0, counts.size() - 1);
+  int max = 0;
+  searchMax(counts, 0, counts.size() - 1, max);
+  char maxChar;
+  for(itr = mp.begin() ; itr != mp.end() ; itr++){
+    if(itr->second == max){
+      maxChar = itr->first;
+      break;
+    }
+  }
+  cout<<"Maximum occurring character in your string: "<<maxChar<<endl;
+}
+
+int main(){
+  string name;
+  cout<<"Enter your string: ";
+  getline(cin, name);
+  findMostOccurr(name, 0, name.length());
+  return 0;
+}
