@@ -1,0 +1,27 @@
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+void removeAllOccurr(string &name, string part, int i){
+  if(i < name.length() - part.length()){
+    if(name.substr(i, part.length()) == part){
+      name.erase(i, part.length());
+      removeAllOccurr(name, part, 0);
+    }
+    removeAllOccurr(name, part, i + 1);
+  }
+}
+
+int main(){
+
+  string name, part;
+  cout<<"Enter your string: ";
+  cin>>name;
+  cout<<"Enter your sub-string to be removed: ";
+  cin>>part;
+  cout<<"Given string: "<<name<<endl;
+  removeAllOccurr(name, part, 0);
+  cout<<"After removing all the sub-str occurrence: "<<name<<endl;
+  return 0;
+}
