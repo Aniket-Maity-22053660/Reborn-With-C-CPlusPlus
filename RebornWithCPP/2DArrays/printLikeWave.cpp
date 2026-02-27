@@ -1,0 +1,74 @@
+#include<iostream>
+#include<vector>
+//#include "make2DMatrix.cpp"
+
+using namespace std;
+
+vector<vector<int>> arr;
+void makeMatrix(int row, int col){
+  arr.assign(row, vector<int>(col));
+  cout<<"Enter the array elements:- "<<endl;
+  for(int i = 0 ; i < row ; i++){
+    for(int j = 0 ; j < col ; j++){
+      cout<<"Enter element["<<i<<"]["<<j<<"]: ";
+      cin>>arr[i][j];
+    }
+  }
+}
+
+void printMatrix(int row, int col){
+  cout<<"Printing given matrix:- "<<endl;
+  for(int i = 0 ; i < row ; i++){
+    for(int j = 0 ; j < col ; j++){
+      cout<<arr[i][j]<<" ";
+    }
+    cout<<'\n';
+  }
+  cout<<'\n';
+}
+
+void print1(int i, int j){
+  if(i < arr.size()){
+    cout<<arr.at(i).at(j)<<" ";
+    print1(i + 1, j);
+  }
+}
+
+void print2(int i, int j){
+  if(i >= 0){
+    cout<<arr.at(i).at(j)<<" ";
+    print2(i - 1, j);
+  }
+}
+
+void printWave(int i){
+  if(i < arr.at(0).size()){
+    int j;
+    if(i % 2 == 0){
+      j = 0;
+      print1(j, i);
+    }else{
+      j = arr.size() - 1;
+      print2(j, i);
+    }
+    printWave(i + 1);
+  }
+}
+
+void printLikeWave(int row, int col){
+  cout<<"Printing like a wave: ";
+  printWave(0);
+  cout<<'\n';
+}
+
+int main(){
+  int row, col;
+  cout<<"Enter the number of rows: ";
+  cin>>row;
+  cout<<"Enter the number of columns: ";
+  cin>>col;
+  makeMatrix(row, col);
+  printMatrix(row, col);
+  printLikeWave(row, col);
+  return 0;
+}
