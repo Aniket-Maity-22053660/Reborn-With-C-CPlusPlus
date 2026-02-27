@@ -1,0 +1,73 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+vector<vector<int>> arr;
+
+void makeMatrix(int row, int col){
+  arr.assign(row, vector<int> (col));
+  cout<<"Enter the elements for the matrix:-"<<endl;
+  for(int i = 0 ; i < row ; i++){
+    for(int j = 0 ; j < col ; j++){
+      cout<<"Enter element["<<i<<"]["<<j<<"]: ";
+      cin>>arr[i][j];
+    }
+  }
+}
+
+void printMatrix(int row, int col){
+  cout<<"Given matrix:- "<<endl;
+  for(int i = 0 ; i < row ; i++){
+    for(int j: arr.at(i)){
+      printf("%4d", j);
+    }
+    putchar('\n');
+  }
+  putchar('\n');
+}
+
+void printSpiral(int row, int col){
+  int count = arr.size() * arr.at(0).size();
+  int i = 0;
+  int startRow = 0;
+  int endRow = arr.size() - 1;
+  int startCol = 0;
+  int endCol = arr.at(0).size() - 1;
+
+  while(i < count){
+    for(int k = startCol ; i < count && k <= endCol ; k++){
+      cout<<arr[startRow][k]<<" ";
+      i++;
+    }
+    startRow++;
+    for(int k = startRow ; i < count && k <= endRow ; k++){
+      cout<<arr[k][endCol]<<" ";
+      i++;
+    }
+    endCol--;
+    for(int k = endCol ; i < count && k >= startCol ; k--){
+      cout<<arr[endRow][k]<<" ";
+      i++;
+    }
+    endRow--;
+    for(int k = endRow ; i < count && k >= startRow ; k--){
+      cout<<arr[k][startCol]<<" ";
+      i++;
+    }
+    startCol++;
+  }
+}
+
+int main(){
+  int row, col;
+  cout<<"Enter the number of rows for the matrix: ";
+  cin>>row;
+  cout<<"Enter the number of columns for the matrix: ";
+  cin>>col;
+  makeMatrix(row, col);
+  printMatrix(row, col);
+  printSpiral(row, col);
+  putchar('\n');
+  return 0;
+}
