@@ -18,20 +18,36 @@ void printMatrix(vector<vector<int>> &arr, int i){
   }
 }
 
-void calcSum(vector<int> arr, int i, int &sum1){
+void calcRowSum(vector<int> &arr, int i, int &sum1){
   if(i < arr.size()){
     sum1 = sum1 + arr.at(i);
-    calcSum(arr, i + 1, sum1);
+    calcRowSum(arr, i + 1, sum1);
   }
 }
 
 void rowSum(vector<vector<int>> &arr, int i, int &sum){
   if(i < arr.size()){
     int sum1 = 0;
-    calcSum(arr.at(i), 0, sum1);
+    calcRowSum(arr.at(i), 0, sum1);
     sum += sum1;
     cout<<i+1<<"th row sum: "<<sum1<<endl;
     rowSum(arr, i + 1, sum);
+  }
+}
+
+void calcColSum(const vector<vector<int>> &arr, int i, int j, int &sum){
+  if(i < arr.size()){
+    sum += arr[i][j];
+    calcColSum(arr, i + 1, j, sum);
+  }
+}
+
+void colSum(const vector<vector<int>> &arr, int i){
+  if(i < arr.at(0).size()){
+    int sum = 0;
+    calcColSum(arr, 0, i, sum);
+    cout<<i+1<<"th column sum: "<<sum<<endl;
+    colSum(arr, i + 1);
   }
 }
 
@@ -54,5 +70,7 @@ int main(){
   cout<<"Printing row-wise sum:- "<<endl;
   int sum = 0;
   rowSum(arr, 0, sum);
+  cout<<"Printing column-wise sum:- "<<endl;
+  colSum(arr, 0);
   return 0;
 }
