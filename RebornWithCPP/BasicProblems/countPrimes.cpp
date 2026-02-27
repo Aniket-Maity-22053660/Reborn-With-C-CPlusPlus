@@ -1,0 +1,45 @@
+#include<iostream>
+#include<map>
+#include<vector>
+
+using namespace std;
+
+void eliminate(int prime, int i, int num, map<int, int> &mp){
+  if(i <= num / 2){
+    mp[prime * i] = 1;
+    eliminate(prime, i + 1, num, mp);
+  }
+}
+
+void findPrimes(map<int, int> &mp, int i, int num, vector<int> &ans){
+  if(i <= num){
+    if(mp[i] != 1){
+      int prime = i;
+      ans.push_back(prime);
+      eliminate(prime, 2, num, mp);
+      //findPrimes(mp, i + 1, num, ans);
+    }
+    findPrimes(mp, i + 1, num, ans);
+  }
+}
+
+void printPrimes(vector<int> &ans, int num){
+  cout<<"No. of primes upto "<<num<<": ";
+  vector<int>::iterator itr;
+  for(itr = ans.begin() ; itr != ans.end() ; itr++){
+    cout<<*itr<<" ";
+  }
+  putchar('\n');
+}
+
+int main(){
+
+  int num;
+  cout<<"Enter the number upto which you want to find the prime numbers: ";
+  cin>>num;
+  map<int, int> mp;
+  vector<int> ans;
+  findPrimes(mp, 2, num, ans);
+  printPrimes(ans, num);
+  return 0;
+}
