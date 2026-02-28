@@ -1,0 +1,27 @@
+#include<iostream>
+#include<memory>
+
+using namespace std;
+
+int findSum(unique_ptr<int []> &ptr, int num, int i){
+  if(i < num){
+    return ptr[i] + findSum(ptr, num, i + 1);
+  }
+  return 0;
+}
+
+int main(){
+
+  int num;
+  cout<<"Enter the total number of array elements: ";
+  cin>>num;
+  cout<<"Enter the array elements:- "<<endl;
+  unique_ptr<int []> ptr = make_unique<int []>(num);
+  for(int i = 0 ; i < num ; i++){
+    cout<<"Enter element - "<<i + 1<<": ";
+    cin>>ptr[i];
+  }
+  int ans = findSum(ptr, num, 0);
+  cout<<"Sum: "<<ans<<endl;
+  return 0;
+}
