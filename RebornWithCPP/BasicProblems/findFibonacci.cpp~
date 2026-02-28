@@ -1,0 +1,27 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+vector<int> t;
+int getFibonacci(int i){
+  if(i < 2){
+    return i;
+  }
+  if(t.at(i) != -1){
+    return t.at(i);
+  }
+  t.at(i) = getFibonacci(i - 1) + getFibonacci(i - 2);
+  return t.at(i);
+}
+int main(){
+  int num;
+  cout<<"Enter the total number for the fibonacci series: ";
+  cin>>num;
+  t.assign(num + 1, -1);
+  for(int i = 0 ; i <= num ; i++){
+    cout<<getFibonacci(i)<<" ";
+  }
+  putchar('\n');
+  return 0;
+}
