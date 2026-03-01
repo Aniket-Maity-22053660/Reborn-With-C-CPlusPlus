@@ -11,7 +11,7 @@ void swap(string &name, int i, int j){
 }
 
 void find(string &name, int i, vector<string> &ans){
-  if(i < name.length()){
+  if(i < name.length() - 1){
     for(int j = i ; j < name.length() ; j++){
       swap(name, i, j);
       find(name, i + 1, ans);
