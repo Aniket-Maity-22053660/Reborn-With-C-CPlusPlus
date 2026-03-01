@@ -1,0 +1,43 @@
+#include<iostream>
+#include<string>
+#include<vector>
+
+using namespace std;
+
+void swap(string &name, int i, int j){
+  int temp = name.at(i);
+  name.at(i) = name.at(j);
+  name.at(j) = temp;
+}
+
+void find(string &name, int i, vector<string> &ans){
+  if(i < name.length()){
+    for(int j = i ; j < name.length() ; j++){
+      swap(name, i, j);
+      find(name, i + 1, ans);
+      swap(name, i, j);
+    }
+    return;
+  }
+  ans.push_back(name);
+  return;
+}
+
+int main(){
+  string name;
+  cout<<"Enter the string of which you want to find the permutations: ";
+  cin>>name;
+  vector<string> ans;
+  find(name, 0, ans);
+  vector<string>::iterator itr;
+  cout<<"Permutations of "<<name<<": ";
+  cout<<'{';
+  for(itr = ans.begin() ; itr != ans.end() ; itr++){
+    cout<<*itr;
+    if(next(itr) != ans.end()){
+      cout<<", ";
+    }
+  }
+  cout<<'}'<<endl;
+  return 0;
+}
