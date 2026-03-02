@@ -1,0 +1,34 @@
+#include<iostream>
+
+using namespace std;
+
+class Box{
+public:
+  Box();
+  ~Box();
+  void sayMyName();
+};
+
+Box::Box(){
+  cout<<"Constructor was called for the class Box!"<<endl;
+}
+
+Box::~Box(){
+  cout<<"Destructor was called for the class Box!"<<endl;
+}
+
+void Box::sayMyName(){
+  cout<<"King Star Khan!"<<endl;
+}
+
+int main(){
+
+  Box obj1[4];
+  obj1[0].sayMyName();
+  Box* obj2 = (obj1 + 2);
+  //(*obj2).sayMyName();
+  Box* obj3 = new Box[3];
+  Box* ptr[] = {obj1, (obj1 + 1), (obj1 + 2)};
+  ptr[0]->sayMyName();
+  return 0;
+}
