@@ -42,7 +42,7 @@ void ratInMaze(vector<vector<char>> &maze, int i, int j, int goal, vector<vector
     ans.at(i).at(j + 1) = 'O';
     }
    
-    visited[i][j] = '0';  
+    //visited[i][j] = '0';  
   return;
 }
 

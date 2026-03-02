@@ -1,0 +1,2 @@
+#include<string.h>
+string name = "King Star";
