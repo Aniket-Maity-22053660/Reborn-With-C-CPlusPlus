@@ -27,5 +27,10 @@ int main(){
     cout<<*(*(*(num3)) + i)<<" ";
   }
   putchar('\n');
+  int ***num4[] = {num3};
+  for(int i = 0 ; i < 5 ; i++){
+    cout<<*(*(*(*(num4 + 0))) + i)<<" ";
+  }
+  putchar('\n');
   return 0;
 }
