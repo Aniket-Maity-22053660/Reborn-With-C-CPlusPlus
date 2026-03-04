@@ -26,6 +26,7 @@ Node* insertAtHead(Node* head, int data){
   else{
     head = temp;
   }
+  Node::count++;
   return head;
 }
 
@@ -39,8 +40,36 @@ void insertAtTail(Node* head, int data){
     Node* node = new Node(data);
     head->next = node;
     node->prev = head;
+    Node::count++;
   }
   return;
+}
+
+void insertAtPos(Node* head, int position, int data){
+  if(position != 2){
+    insertAtPos(head->next, position - 1, data);
+  }else{
+    Node* node = new Node(data);
+    Node* temp = head->next;
+    temp->prev = node;
+    head->next = node;
+    node->prev = head;
+    node->next = temp;
+    return;
+  }
+  return;
+}
+
+void insertAtPosition(Node** head, int position, int data){
+  if(position == 1){
+    *head = insertAtHead(*head, data);
+    return;
+  }
+  if(position > Node::count){
+    insertAtTail(*head, data);
+    return;
+  }
+  insertAtPos(*head, position, data);
 }
 
 void printNodes(Node* head){
@@ -68,6 +97,10 @@ int main(){
   head = insertAtHead(head, 30);
   printNodes(head);
   insertAtTail(head, 90);
+  printNodes(head);
+  insertAtPosition(&head, 4, 50);
+  printNodes(head);
+  insertAtPosition(&head, 1, 100);
   printNodes(head);
   return 0;
 }
