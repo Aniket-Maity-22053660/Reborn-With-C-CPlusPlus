@@ -3,7 +3,31 @@
 
 using namespace std;
 
+struct Book{
+  char *name;
+  int pages;
+  char* author;
+} book1;
+
+struct Book setBook(struct Book book1){
+  book1.name = new char[30];
+  book1.author = new char[20];
+
+  book1.name = "Operating System";
+  book1.pages = 1200;
+  book1.author = "Silberscatz";
+  return book1;
+}
+
+void printBook(struct Book* book){
+  cout<<"Printing Book information:- "<<endl;
+  cout<<"Name: "<<book->name<<endl;
+  cout<<"Pages: "<<book->pages<<endl;
+  cout<<"Author: "<<book->author<<endl;
+}
+
 int calcStrLength(char* name);
+
 int main(){
 
   int num[] = {10, 20, 30, 40, 50};
@@ -65,6 +89,22 @@ int main(){
   //name = "King star khan!";
   strcpy(name, "King star khan!");
   cout<<name<<": "<<calcStrLength(name)<<endl;
+  char *name3 = "King";
+  char *name4;
+  name4 = name3;
+  char* names[] = {name4};
+  cout<<names[0]<<endl;
+
+  book1 = setBook(book1);
+  printBook(&book1);
+  struct Book book2;
+  book2 = setBook(book2);
+  printBook(&book2);
+  struct Book* book[] = {&book1, &book2};
+  printBook(book[1]);
+  struct Book* books = new Book[5];
+  *(books + 4) = setBook(*(books+4));
+  printBook(books + 4);
   return 0;
 }
 
