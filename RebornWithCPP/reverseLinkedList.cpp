@@ -1,0 +1,71 @@
+#include<iostream>
+
+using namespace std;
+
+struct Node{
+  int data;
+  struct Node* next;
+};
+
+struct Node* insertAtHead(struct Node* head, int element){
+  struct Node* node = new Node;
+  node->next = head;
+  node->data = element;
+  head = node;
+  return head;
+}
+
+void printNodes(struct Node* head){
+  if(head != NULL){
+    cout<<head->data;
+    if(head->next != NULL){
+      cout<<"->";
+    }
+    printNodes(head->next);
+    return;
+  }
+  cout<<'\n';
+  return;
+}
+
+struct Node* reverse(struct Node* temp1, struct Node* temp2, struct Node* temp3){
+  if(temp2 == NULL){
+    return temp1;
+  }
+  temp2->next = temp1;
+  temp1 = temp2;
+  temp2 = temp3;
+  if(temp3 != NULL){
+    temp3 = temp3->next;
+  }
+  return reverse(temp1, temp2, temp3);
+}
+
+void reverseLinkedList(struct Node** head){
+  if(*head == NULL){
+    return;
+  }
+  struct Node* temp1 = NULL;
+  struct Node* temp2 = *head;
+  struct Node* temp3 = temp2->next;
+  *head = reverse(temp1, temp2, temp3);
+  return;
+}
+
+int main(){
+
+  struct Node* head = NULL;
+  int num, element;
+  cout<<"Enter the number of nodes in the LinkedList: ";
+  cin>>num;
+  for(int i = 0 ; i < num ; i++){
+    cout<<"Enter the element - "<<(i + 1)<<": ";
+    cin>>element;
+    head = insertAtHead(head, element);
+  }
+  printNodes(head);
+  reverseLinkedList(&head);
+  cout<<"After reversing the LinkedList: ";
+  printNodes(head);
+  return 0;
+}
