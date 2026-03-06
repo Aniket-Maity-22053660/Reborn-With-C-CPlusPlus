@@ -1,0 +1,111 @@
+#include<iostream>
+
+using namespace std;
+
+class Node{
+public:
+  int data;
+  Node* next;
+  Node(int data){
+    this->data = data;
+    this->next = NULL;
+  }
+};
+
+void insertAtTail(Node* head, int data){
+  if(head->next != NULL){
+    insertAtTail(head->next, data);
+    return;
+  }
+  Node* node = new Node(data);
+  head->next = node;
+  return;
+}
+
+void insert(Node** head, int data){
+  if(*head != NULL){
+    insertAtTail(*head, data);
+  }
+  Node* node = new Node(data);
+  *head = node;
+  return;
+}
+
+int checkCount(Node* head){
+  if(head != NULL){
+    return 1 + checkCount(head->next);
+  }
+  return 0;
+}
+
+Node* findEnd(Node* head, Node* temp, int count){
+  if(count > 0){
+    temp = head;
+    return findEnd(head->next, temp, count - 1);
+  }
+  return temp;
+}
+
+bool compare(Node* head, Node* temp2, int count){
+  if(count > 0){
+    if(head->data != temp2->data){
+      return false;
+    }
+    return compare(head->next, temp2->next, count - 1);
+  }
+  return true;
+}
+
+Node* reverse(Node* temp1, Node* temp2, Node* temp3){
+  if(temp2 != NULL){
+    temp2->next = temp1;
+    temp1 = temp2;
+    temp2 = temp3;
+    if(temp3 != NULL){
+      temp3 = temp3->next;
+    }
+    return reverse(temp1, temp2, temp3);
+  }
+  return temp1;
+}
+
+int main(){
+  int num, element;
+  cout<<"Enter the total number of nodes in the LinkedList: ";
+  cin>>num;
+  Node* head = NULL;
+  cout<<"Enter the nodes:- "<<endl;
+  for(int i = 0 ; i < num ; i++){
+    cout<<"Enter element - "<<i + 1<<": ";
+    cin>>element;
+    insert(&head, element);
+  }
+  if(head == NULL){
+    cout<<"There are no nodes in the LinkedList!"<<endl;
+    return 0;
+  }
+  if(head->next == NULL){
+    cout<<"Given list is a palindrome!"<<endl;
+    return 0;
+  }
+  
+  int count = checkCount(head);
+  Node* temp1 = head;
+  Node* temp2 = findEnd(head, temp1, count / 2);
+  if(count % 2 != 0){
+    temp2 = temp2->next->next;
+  }else{
+    temp2 = temp2->next;
+  }
+  Node* temp3 = NULL;
+  Node* temp4 = temp2;
+  Node* temp5 = temp4->next;
+  temp2 = reverse(temp3, temp4, temp5);
+  bool ans = compare(head, temp2, count / 2);
+  if(ans){
+    cout<<"Given list is a palindrome!"<<endl;
+  }else{
+    cout<<"Given list is not a palindrome!"<<endl;
+  }
+  return 0;
+}
