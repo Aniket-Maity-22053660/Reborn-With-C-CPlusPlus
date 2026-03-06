@@ -1,0 +1,60 @@
+#include<iostream>
+
+using namespace std;
+
+class Node{
+public:
+  Node(int data){
+    this->data = data;
+    this->next = NULL;
+  }
+  int data;
+  Node* next;
+};
+
+void insertAtTail(Node* head, int data){
+  if(head->next != NULL){
+    insertAtTail(head->next, data);
+    return;
+  }
+  Node* node = new Node(data);
+  head->next = node;
+  return;
+}
+
+void insert(Node** head, int data){
+  if(*head != NULL){
+    insertAtTail(*head, data);
+  }else{
+    Node* node = new Node(data);
+    *head = node;
+  }
+
+}
+
+void printNodes(Node* head){
+  if(head != NULL){
+    cout<<head->data;
+    if(head->next != NULL){
+      cout<<"->";
+    }
+    printNodes(head->next);
+    return;
+  }
+  putchar('\n');
+  return;
+}
+
+int main(){
+  Node* head = NULL;
+  int num, element;
+  cout<<"Enter total number of nodes in the LinkedList: ";
+  cin>>num;
+  for(int i = 0 ; i < num ; i++){
+    cout<<"Enter element - "<<(i + 1)<<": ";
+    cin>>element;
+    insert(&head, element);
+  }
+  printNodes(head);
+  return 0;
+}
