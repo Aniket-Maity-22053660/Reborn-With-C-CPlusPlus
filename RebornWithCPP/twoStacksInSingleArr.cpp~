@@ -1,0 +1,83 @@
+#include<iostream>
+
+using namespace std;
+
+class Stack{
+  int num, st1Start, st2Start;
+  int *arr = NULL;
+public:
+  Stack(int num){
+    arr = new int[num];
+    st1Start = -1;
+    st2Start = num;
+  }
+
+  bool st1Push(int data);
+  bool st2Push(int data);
+  bool st1Pop();
+  bool st2Pop();
+  int st1Top();
+  int st2Top();
+};
+
+
+bool Stack::st1Push(int data){
+  if(st1Start < st2Start - 1){
+    arr[++st1Start] = data;
+    return true;
+  }
+  return false;
+}
+
+bool Stack::st2Push(int data){
+  if(st2Start > st1Start + 1){
+    arr[--st2Start] = 0;
+    return true;
+  }
+  return false;
+}
+
+bool Stack::st1Pop(){
+  if(st1Start >= 0){
+    arr[st1Start--] = 0;
+    return true;
+  }
+  return false;
+}
+
+bool Stack::st2Pop(){
+  if(st2Start <= num - 1){
+    arr[st2Start++] = 0;
+    return true;
+  }
+  return false;
+}
+
+int Stack::st1Top(){
+  if(st1Start != -1){
+    return arr[st1Start];
+  }
+  return -1;
+}
+
+int Stack::st2Top(){
+  if(st2Start != num){
+    return arr[st2Start];
+  }
+  return -1;
+}
+
+int main(){
+  Stack* stack = new Stack(5);
+  if(stack->st1Push(20)){
+    cout<<"Element pushed into stack-1 successfully!"<<endl;
+  }else{
+    cout<<"Stack-1 overflow!"<<endl;
+  }
+  if(stack->st1Top() != -1){
+    cout<<"Stack-1 top: "<<stack->st1Top()<<endl;
+  }else{
+    cout<<"Stack-1 is empty!"<<endl;
+  }
+  return 0;
+}
