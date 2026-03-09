@@ -1,0 +1,128 @@
+#include<iostream>
+
+using namespace std;
+
+class Queue{
+  Queue* front;
+  Queue* rear;
+  Queue* next;
+  int data;
+  void insertAtTail(int data);
+  void deleteAtHead();
+  void print(Queue*);
+public: 
+  Queue(){
+    this->front = NULL;
+    this->rear = NULL;
+    this->next = NULL;
+  }
+  void enque(int);
+  void deque();
+  bool empty();
+  int getFront();
+  int getBack();
+  void printQueue();
+};
+
+void Queue::print(Queue* node){
+  if(node != NULL){
+    cout<<node->data;
+    if(node->next != NULL){
+      cout<<"->";
+    }
+    print(node->next);
+    return;
+  }
+  putchar('\n');
+  return;
+}
+
+void Queue::printQueue(){
+  print(front);
+}
+
+bool Queue::empty(){
+  if(front == NULL && rear == NULL){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+void Queue::insertAtTail(int data){
+  if(empty()){
+    Queue* node = new Queue();
+    this->front = node;
+    this->rear = node;
+    node->data = data;
+  }else{
+    Queue* node = new Queue();
+    node->data = data;
+    node->next = NULL;
+    front->next = node;
+    front = front->next;
+  }
+  return;
+}
+
+void Queue::deleteAtHead(){
+  if(empty()){
+    cout<<"Queue underflow!"<<endl;
+  }else if(front != rear){
+    Queue* temp = rear;
+    rear = rear->next;
+    delete temp;
+  }else{
+    Queue* temp = front;
+    front = NULL;
+    rear = NULL;
+    delete temp;
+  }
+  return;
+}
+
+void Queue::enque(int data){
+  insertAtTail(data);
+}
+
+void Queue::deque(){
+  deleteAtHead();
+}
+
+int Queue::getFront(){
+  if(!empty()){
+    return front->data;
+  }else{
+    return -1;
+  }
+}
+
+int Queue::getBack(){
+  if(!empty()){
+    return rear->data;
+  }else{
+    return -1;
+  }
+}
+
+
+
+int main(){
+
+  Queue* queue = new Queue();
+  cout<<queue->empty()<<endl;
+  queue->enque(30);
+  cout<<queue->getFront()<<endl;
+  queue->enque(40);
+  queue->enque(50);
+  queue->enque(90);
+  cout<<"Queue: ";
+  queue->printQueue();
+  cout<<"Back: "<<queue->getBack()<<endl;
+  queue->deque();
+  cout<<"Back: "<<queue->getBack()<<endl;
+  cout<<"Front: "<<queue->getFront()<<endl;
+  cout<<"Queue: ";
+  queue->printQueue();
+  return 0;
+}
