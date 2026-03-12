@@ -25,6 +25,7 @@ class Tree{
   void inTrav(Node*);
   void buildFromLevel(queue<Node*>, deque<int>);
   int height(Node*);
+  int diameter(Node*);
 public:
   Tree(){
     this->root = NULL;
@@ -34,8 +35,28 @@ public:
   void inOrderTrav();
   void buildFromLevelOrder();
   void findHeight();
+  void findDiameter();
 };
 
+int diameter(Node* root){
+  if(root != NULL){
+    int left = diameter(root->left);
+    int right = diameter(root->right);
+    int height = 2 + height(root->left) + height(root->right);
+    return max(max(left, right), height);
+  }
+  return 0;
+}
+
+void Tree::findDiameter(){
+  int ans = diameter(root);
+  if(ans != 0){
+    cout<<"Diameter of the tree: "<<ans<<endl;
+  }else{
+    cout<<"Tree is empty!"<<endl;
+  }
+  return;
+}
 
 int Tree::height(Node* root){
   if(root != NULL){
