@@ -1,6 +1,8 @@
 #include<iostream>
 #include<queue>
 #include<deque>
+#include "test.h"
+#define max(a, b)( a > b ? a : b)
 
 using namespace std;
 
@@ -22,6 +24,7 @@ class Tree{
   void levelTrav(queue<Node*>&);
   void inTrav(Node*);
   void buildFromLevel(queue<Node*>, deque<int>);
+  int height(Node*);
 public:
   Tree(){
     this->root = NULL;
@@ -30,7 +33,26 @@ public:
   void levelOrderTrav();
   void inOrderTrav();
   void buildFromLevelOrder();
+  void findHeight();
 };
+
+
+int Tree::height(Node* root){
+  if(root != NULL){
+    return 1 + max(height(root->left), height(root->right));
+  }
+  return -1;
+}
+
+void Tree::findHeight(){
+  int ans = height(root);
+  if(ans != -1){
+    cout<<"Height of the binary tree: "<<ans<<endl;
+  }else{
+    cout<<"Tree is empty!"<<endl;
+  }
+  return;
+}
 
 void Tree::buildFromLevel(queue<Node*> q, deque<int> arr){
   if(!q.empty()){
@@ -156,11 +178,14 @@ void Tree::createTree(){
   root = create();
 }
 
+
+
 int main(){
   Tree* tree = new Tree();
   tree->createTree();
-  tree->levelOrderTrav();
+  //tree->levelOrderTrav();
   tree->inOrderTrav();
-  tree->buildFromLevelOrder();
+  //tree->buildFromLevelOrder();
+  tree->findHeight();
   return 0;
 }
