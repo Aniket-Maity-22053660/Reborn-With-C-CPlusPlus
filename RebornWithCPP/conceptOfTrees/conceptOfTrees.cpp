@@ -26,6 +26,9 @@ class Tree{
   void buildFromLevel(queue<Node*>, deque<int>);
   int height(Node*);
   int diameter(Node*);
+  bool isBalanced(Node*);
+  bool checkIdentical(Node*, Node*);
+  bool sumTree(Node* root, int&);
 public:
   Tree(){
     this->root = NULL;
@@ -36,14 +39,95 @@ public:
   void buildFromLevelOrder();
   void findHeight();
   void findDiameter();
+  void checkBalanced();
+  void checkTwoTreesIdentical();
+  void checkSumTree();
 };
 
-int diameter(Node* root){
+bool Tree::sumTree(Node* root, int &sum){
+  if(root != NULL){
+    if(root->left == NULL && root->right == NULL){
+      sum = root->data;
+      return true;
+    }
+    int lSum = 0, rSum = 0;
+    bool left = sumTree(root->left, lSum);
+    if(left){
+      if(sumTree(root->right, rSum) && root->data == (rSum + lSum)){
+        return true;
+      }
+    }
+    return false;
+  }
+  return true;
+}
+
+void Tree::checkSumTree(){
+  int sum = 0;
+  bool ans = sumTree(root, sum);
+  if(ans){
+    cout<<"Given tree is a Sum Tree!"<<endl;
+  }else{
+    cout<<"Given tree is not a Sum Tree!"<<endl;
+  }
+  return;
+}
+
+bool Tree::checkIdentical(Node* root1, Node* root2){
+  if(root1 != NULL && root2 != NULL){
+    if(root1->data == root2->data){
+      bool left = checkIdentical(root1->left, root2->left);
+      if(left){
+        if(checkIdentical(root1->right, root2->right)){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  if(root1 == NULL && root2 == NULL){
+    return true;
+  }
+  return false;
+}
+
+void Tree::checkTwoTreesIdentical(){
+  /*bool ans = checkIdentical(root1,  root2);
+  if(ans){
+    cout<<"Given two trees are identical!"<<endl;
+  }else{
+    cout<<"Two trees are not identical!"<<endl;
+  }
+  return;
+  */
+}
+
+bool Tree::isBalanced(Node* root){
+  if(root == NULL){
+    bool left = isBalanced(root->left);
+    bool right = false;
+    if(left){
+      right = isBalanced(root->right);
+    }
+    if(left && right){
+      return abs(height(root->left) - height(root->right)) <= 1 ? true : false;
+    }else{
+      return false;
+    }
+  }
+  return true;
+}
+
+void Tree::checkBalanced(){
+  bool ans = isBalanced(root);
+}
+
+int Tree::diameter(Node* root){
   if(root != NULL){
     int left = diameter(root->left);
     int right = diameter(root->right);
-    int height = 2 + height(root->left) + height(root->right);
-    return max(max(left, right), height);
+    int Height = 2 + height(root->left) + height(root->right);
+    return max(max(left, right), Height);
   }
   return 0;
 }
@@ -208,5 +292,7 @@ int main(){
   tree->inOrderTrav();
   //tree->buildFromLevelOrder();
   tree->findHeight();
+  tree->findDiameter();
+  tree->checkSumTree();
   return 0;
 }
