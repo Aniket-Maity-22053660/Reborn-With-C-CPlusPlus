@@ -1,6 +1,7 @@
 #include<iostream>
 #include<queue>
 #include<deque>
+#include<vector>
 #include "test.h"
 #define max(a, b)( a > b ? a : b)
 
@@ -29,6 +30,13 @@ class Tree{
   bool isBalanced(Node*);
   bool checkIdentical(Node*, Node*);
   bool sumTree(Node* root, int&);
+  void zigZagTraversal(Node*);
+  void traverse(queue<int>&, int, vector<int>&);
+  void zigZag(queue<Node*> &, int, int, deque<int> &, int);
+  vector<int> boundaryTreeTrav(Node*, vector<int>);
+  void getLeaves(Node*, vector<int>&);
+  void getLeftNodes(Node*, vector<int>&);
+  void getRightNodes(Node*, vector<int>&);
 public:
   Tree(){
     this->root = NULL;
@@ -42,7 +50,80 @@ public:
   void checkBalanced();
   void checkTwoTreesIdentical();
   void checkSumTree();
+  void printZigZag();
+  void printBoundaryTrav();
 };
+
+void Tree::getLeaves(Node* temp2, vector<int> &ans){
+  if(temp2 != NULL){
+    if(temp2->left == NULL && temp2->right == NULL){
+      ans.push_back(temp2->data);
+      return;
+    }
+    getLeaves(temp2->left, ans);
+    getLeaves(temp2->right, ans);
+  }
+  return;
+}
+
+void Tree::getLeftNodes(Node* temp1, vector<int> &ans){
+  if(temp1 != NULL){
+    if(temp1->left == NULL && temp1->right == NULL){
+      return;
+    }
+    ans.push_back(temp1->data);
+    if(temp1->left){
+      getLeftNodes(temp1->left, ans);
+    }else{
+      getLeftNodes(temp1->right, ans);
+    }
+    
+  }
+  return;
+}
+
+void Tree::getRightNodes(Node* temp3, vector<int> &ans){
+  if(temp3 != NULL){
+    if(temp3->left == NULL && temp3->right == NULL){
+      return;
+    }
+    if(temp3->right){
+      getRightNodes(temp3->right, ans);
+    }else{
+      getRightNodes(temp3->left, ans);
+    }
+    
+    ans.push_back(temp3->data);
+  }
+  return;
+}
+
+vector<int> Tree::boundaryTreeTrav(Node* root, vector<int> ans){
+  ans.push_back(root->data);
+
+  getLeftNodes(root->left, ans);
+  getLeaves(root->left, ans);
+  getLeaves(root->right, ans);
+  getRightNodes(root->right, ans);
+
+  return ans;
+}
+
+void Tree::printBoundaryTrav(){
+  if(root != NULL){
+  vector<int> ans;
+  cout<<"Printing boundary tree traversal: ";
+  ans = boundaryTreeTrav(root, ans);
+  vector<int>::iterator itr;
+  for(itr = ans.begin() ; itr != ans.end() ; itr++){
+    cout<<*itr<<" ";
+  }
+  putchar('\n');
+  }else{
+    cout<<"Tree is empty!"<<endl;
+  }
+  return;
+}
 
 bool Tree::sumTree(Node* root, int &sum){
   if(root != NULL){
@@ -54,6 +135,7 @@ bool Tree::sumTree(Node* root, int &sum){
     bool left = sumTree(root->left, lSum);
     if(left){
       if(sumTree(root->right, rSum) && root->data == (rSum + lSum)){
+        sum = root->data + rSum + lSum;
         return true;
       }
     }
@@ -103,7 +185,7 @@ void Tree::checkTwoTreesIdentical(){
 }
 
 bool Tree::isBalanced(Node* root){
-  if(root == NULL){
+  if(root != NULL){
     bool left = isBalanced(root->left);
     bool right = false;
     if(left){
@@ -294,5 +376,6 @@ int main(){
   tree->findHeight();
   tree->findDiameter();
   tree->checkSumTree();
+  tree->printBoundaryTrav();
   return 0;
 }
