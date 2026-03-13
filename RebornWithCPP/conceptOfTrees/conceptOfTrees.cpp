@@ -37,6 +37,7 @@ class Tree{
   void getLeaves(Node*, vector<int>&);
   void getLeftNodes(Node*, vector<int>&);
   void getRightNodes(Node*, vector<int>&);
+  Node* LCA(Node*, int, int);
 public:
   Tree(){
     this->root = NULL;
@@ -52,7 +53,46 @@ public:
   void checkSumTree();
   void printZigZag();
   void printBoundaryTrav();
+  void findLCA();
 };
+
+Node* Tree::LCA(Node* root, int num1, int num2){
+  if(root != NULL){
+    if(root->data == num1 || root->data == num2){
+      return root;
+    }
+    Node* leftSubTree = LCA(root->left, num1, num2);
+    Node* rightSubTree = LCA(root->right, num1, num2);
+    if(leftSubTree == NULL && rightSubTree == NULL){
+      return NULL;
+    }
+    if(leftSubTree != NULL && rightSubTree == NULL){
+      return leftSubTree;
+    }
+    if(leftSubTree == NULL && rightSubTree != NULL){
+      return rightSubTree;
+    }
+    if(leftSubTree != NULL && rightSubTree != NULL){
+      return root;
+    }
+  }
+  return NULL;
+}
+
+void Tree::findLCA(){
+  int num1, num2;
+  cout<<"Enter the value of the first node: ";
+  cin>>num1;
+  cout<<"Enter the value of the second node: ";
+  cin>>num2;
+  Node* ans = LCA(root, num1, num2);
+  if(ans != NULL){
+    cout<<"Value of the lowest common ancestor: "<<ans->data<<endl;
+  }else{
+    cout<<"Tree is empty!"<<endl;
+  }
+  return;
+}
 
 void Tree::getLeaves(Node* temp2, vector<int> &ans){
   if(temp2 != NULL){
@@ -368,7 +408,7 @@ void Tree::createTree(){
 
 
 int main(){
-  Tree* tree = new Tree();
+  /*Tree* tree = new Tree();
   tree->createTree();
   //tree->levelOrderTrav();
   tree->inOrderTrav();
@@ -377,5 +417,11 @@ int main(){
   tree->findDiameter();
   tree->checkSumTree();
   tree->printBoundaryTrav();
+  */
+  Tree* tree = new Tree();
+  tree->createTree();
+  tree->levelOrderTrav();
+  tree->findLCA();
+  //sayMyName();
   return 0;
 }
