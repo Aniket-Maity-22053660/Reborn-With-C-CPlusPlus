@@ -2,6 +2,8 @@
 #include<queue>
 #include<deque>
 #include<vector>
+#include<algorithm>
+
 #include "test.h"
 #define max(a, b)( a > b ? a : b)
 
@@ -39,6 +41,7 @@ class Tree{
   void getRightNodes(Node*, vector<int>&);
   Node* LCA(Node*, int, int);
   bool getPath(Node*, int, vector<int>&);
+  void find_k_sum_paths(Node*, int, vector<int>&, vector<vector<int>>&);
 public:
   Tree(){
     this->root = NULL;
@@ -56,7 +59,52 @@ public:
   void printBoundaryTrav();
   void findLCA();
   void findPath();
+  void findKSumPaths();
 };
+
+void Tree::find_k_sum_paths(Node* root, int k, vector<int> &path, vector<vector<int>> &ans){
+  if(root != NULL){
+    path.push_back(root->data);
+    find_k_sum_paths(root->left, k, path, ans);
+    find_k_sum_paths(root->right, k, path, ans);
+    int i = path.size() - 1;
+    int sum = 0;
+    vector<int> temp;
+    while(i >= 0){
+      temp.push_back(path.at(i));
+      sum += path.at(i--);
+      if(sum == k){
+        reverse(temp.begin(), temp.end());
+      ans.push_back(temp);
+      }
+    }
+    temp.clear();
+    path.pop_back();
+  }
+  return;
+}
+
+void Tree::findKSumPaths(){
+  vector<vector<int>> ans;
+  vector<int> path;
+  int k;
+  cout<<"Enter the value of the k-sum: ";
+  cin>>k;
+  find_k_sum_paths(root, k, path, ans);
+  cout<<'[';
+  for(vector<int> path: ans){
+    cout<<'[';
+    vector<int>::iterator itr;
+    for(itr = path.begin() ; itr != path.end() ; itr++){
+      cout<<*itr;
+      if(next(itr) != path.end()){
+        cout<<", ";
+      }
+    }
+    cout<<']';
+  }
+  cout<<']'<<endl;;
+}
 
 bool Tree::getPath(Node* root, int data, vector<int> &path){
   if(root != NULL){
@@ -468,6 +516,6 @@ int main(){
   tree->findPath();
   //tree->findLCA();
   //sayMyName();
-
+  tree->findKSumPaths();
   return 0;
 }
