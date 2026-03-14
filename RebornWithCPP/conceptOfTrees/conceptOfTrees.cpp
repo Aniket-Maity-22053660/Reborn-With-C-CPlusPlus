@@ -38,6 +38,7 @@ class Tree{
   void getLeftNodes(Node*, vector<int>&);
   void getRightNodes(Node*, vector<int>&);
   Node* LCA(Node*, int, int);
+  bool getPath(Node*, int, vector<int>&);
 public:
   Tree(){
     this->root = NULL;
@@ -54,7 +55,50 @@ public:
   void printZigZag();
   void printBoundaryTrav();
   void findLCA();
+  void findPath();
 };
+
+bool Tree::getPath(Node* root, int data, vector<int> &path){
+  if(root != NULL){
+    path.push_back(root->data);
+    bool left = getPath(root->left, data, path);
+    if(left == false){
+      bool right = getPath(root->right, data, path);
+      if(right == false){
+        if(root->data == data){
+          return true;
+        }
+        path.pop_back();
+        return false;
+      }else{
+        return true;
+      }
+    }
+    return left;
+  }
+  return false;
+}
+
+void Tree::findPath(){
+  vector<int> path;
+  int data;
+  cout<<"Enter the node to find its path: ";
+  cin>>data;
+  bool ans = getPath(root, data, path);
+  if(ans){
+    vector<int>::iterator itr;
+    for(itr = path.begin() ; itr != path.end() ; itr++){
+      cout<<*itr;
+      if(next(itr) != path.end()){
+        cout<<"->";
+      }
+    }
+    putchar('\n');
+  }else{
+    cout<<"Path is not found!"<<endl;
+  }
+  return;
+}
 
 Node* Tree::LCA(Node* root, int num1, int num2){
   if(root != NULL){
@@ -421,7 +465,9 @@ int main(){
   Tree* tree = new Tree();
   tree->createTree();
   tree->levelOrderTrav();
-  tree->findLCA();
+  tree->findPath();
+  //tree->findLCA();
   //sayMyName();
+
   return 0;
 }
