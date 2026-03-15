@@ -18,13 +18,44 @@ class BST{
     Node* root;
     Node* insert(Node* root, int);
     void inTrav(Node*);
+    bool search(Node* root, int);
     public:
     BST(){
         this->root = NULL;
     }
     void insertIntoBST();
     void inOrderTrav();
+    void searchInBST();
 };
+
+bool BST::search(Node* root, int data){
+    if(root != NULL){
+        if(data == root->data){
+            return true;
+        }
+        bool left = search(root->left, data);
+        if(!left){
+            bool right = search(root->right, data);
+            if(right){
+                return true;
+            }
+        }
+        return left;
+    }
+    return false;
+}
+void BST::searchInBST(){
+    int data;
+    cout<<"Enter the data to be searched: ";
+    cin>>data;
+    bool ans = search(root, data);
+    if(ans){
+        cout<<data<<" was fount in the BST!"<<endl;
+    }else{
+        cout<<data<<" was not found in the BST!"<<endl;
+    }
+    return;
+}
 
 void BST::inTrav(Node* root){
     if(root != NULL){
@@ -74,5 +105,6 @@ int main(){
     BST* bst = new BST();
     bst->insertIntoBST();
     bst->inOrderTrav();
+    bst->searchInBST();
     return 0;
 }
