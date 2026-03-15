@@ -78,7 +78,7 @@ void Tree::find_k_sum_paths(Node* root, int k, vector<int> &path, vector<vector<
       ans.push_back(temp);
       }
     }
-    temp.clear();
+    //temp.clear();
     path.pop_back();
   }
   return;
