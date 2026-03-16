@@ -1,0 +1,10 @@
+#include<iostream>
+#include<memory>
+
+using namespace std;
+
+int main(){
+  int num;
+  unique_ptr<int[]> arr = make_unique<int[]>()
+  return 0;
+}
